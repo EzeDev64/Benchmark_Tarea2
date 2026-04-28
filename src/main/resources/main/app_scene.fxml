@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane fx:controller="main.MainWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="659.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <SplitPane dividerPositions="0.7229832572298326" prefHeight="376.0" prefWidth="659.0">
+         <items>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <TabPane layoutY="-1.0" prefHeight="376.0" prefWidth="472.0" tabClosingPolicy="UNAVAILABLE">
+                     <tabs>
+                        <Tab fx:id="tabTables" text="Tables">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <TableView layoutX="14.0" layoutY="12.0" prefHeight="323.0" prefWidth="445.0">
+                                       <columns>
+                                          <TableColumn prefWidth="75.0" text="C1" />
+                                          <TableColumn prefWidth="75.0" text="C2" />
+                                       </columns>
+                                    </TableView>
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </Tab>
+                        <Tab fx:id="tabTree" text="Tree View">
+                           <content>
+                              <AnchorPane fx:id="main_pane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                           </content>
+                        </Tab>
+                     </tabs>
+                  </TabPane>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="settings_pane" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" />
+         </items>
+      </SplitPane>
+      <AnchorPane fx:id="buttons_pane" layoutX="2.0" layoutY="376.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="109.0" prefWidth="657.0" />
+   </children>
+</Pane>
