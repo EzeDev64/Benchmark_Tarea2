@@ -29,9 +29,9 @@ public class BST {
      * Si el árbol está vacío, la clave se convierte en la raíz.
      * Si no, se recorre recursivamente hasta encontrar la posición correcta.
      */
-    public void insert(int key) // método público para insertar una clave en el árbol
+    public void insert(int key) 
     {
-        root = insertRec(root, key);  // llama al método recursivo para insertar la clave
+        root = insertRec(root, key);
     }
 
     /**
@@ -51,6 +51,30 @@ public class BST {
             node.right = insertRec(node.right, key); // ir a la derecha
         }
         return node; // devolver el nodo actualizado
+    }
+
+    /**
+     * Busca una clave en el árbol.
+     * @param key Clave a buscar
+     * @return true si la clave existe, false si no
+     */
+    public boolean search(int key) // método público para iniciar la búsqueda
+    {
+        return searchRec(root, key);    // llama al método recursivo con la raíz del árbol
+    }
+
+    private boolean searchRec(BSTNode node, int key) {  // método recursivo para buscar una clave
+        if (node == null) {
+            return false; // caso base: nodo vacío
+        }
+        if (key == node.key) {
+            return true; // clave encontrada
+        }
+        if (key < node.key) {       // si la clave es menor, buscar en el subárbol izquierdo
+            return searchRec(node.left, key); // ir a la izquierda
+        } else {
+            return searchRec(node.right, key); // ir a la derecha
+        }
     }
 
     /**
