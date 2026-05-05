@@ -1,3 +1,0 @@
-Leer este documento antes de crear ningun otro archivo
-Este documento es solo para poder crear la carpeta de destino de los árboles
-Una vez algún archivo sea subido a esta carpeta, eliminar este archivo.

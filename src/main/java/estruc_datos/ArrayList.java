@@ -9,7 +9,6 @@ public class ArrayList <T>{
         this.list = null;
     }
 
-    @SuppressWarnings("unchecked")
     public void push(T data){
         if (this.list == null){
             this.list = new Object[1];
