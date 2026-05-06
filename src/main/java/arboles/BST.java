@@ -77,19 +77,71 @@ public class BST {
         }
     }
 
+        /**
+         * Recorre el árbol en orden (in-order traversal).
+         * Esto imprime las claves en orden ascendente.
+         */
+        public void inorder() {
+            inorderRec(root);
+        }
+
+        private void inorderRec(BSTNode node) {
+            if (node != null) {
+                inorderRec(node.left);          // visitar subárbol izquierdo
+                System.out.print(node.key + " "); // visitar nodo actual
+                inorderRec(node.right);         // visitar subárbol derecho
+            }
+        }
+
+        public void delete(int key) {
+        root = deleteRec(root, key);
+        }
+
     /**
-     * Recorre el árbol en orden (in-order traversal).
-     * Esto imprime las claves en orden ascendente.
+     * Método recursivo para eliminar una clave del BST.
+     * Casos:
+     * 1. Nodo hoja → se elimina directamente.
+     * 2. Nodo con un hijo → se reemplaza por su hijo.
+     * 3. Nodo con dos hijos → se reemplaza por el sucesor mínimo del subárbol derecho.
      */
-    public void inorder() {
-        inorderRec(root);
+    private BSTNode deleteRec(BSTNode node, int key) {
+        if (node == null) {
+            return null; // caso base: nodo vacío
+        }
+
+        if (key < node.key) {
+            node.left = deleteRec(node.left, key); // buscar en la izquierda
+        } else if (key > node.key) {
+            node.right = deleteRec(node.right, key); // buscar en la derecha
+        } else {
+            // Caso 1: nodo hoja
+            if (node.left == null && node.right == null) {
+                return null;
+            }
+            // Caso 2: un hijo
+            if (node.left == null) {
+                return node.right;
+            } else if (node.right == null) {
+                return node.left;
+            }
+            // Caso 3: dos hijos → sucesor mínimo del subárbol derecho
+            node.key = minValue(node.right);
+            node.right = deleteRec(node.right, node.key);
+        }
+        return node;
     }
 
-    private void inorderRec(BSTNode node) {
-        if (node != null) {
-            inorderRec(node.left);          // visitar subárbol izquierdo
-            System.out.print(node.key + " "); // visitar nodo actual
-            inorderRec(node.right);         // visitar subárbol derecho
+    /**
+     * Encuentra el valor mínimo en un subárbol.
+     * Se usa para reemplazar un nodo con dos hijos.
+     */
+    private int minValue(BSTNode node) {
+        int min = node.key;
+        while (node.left != null) {
+            min = node.left.key;
+            node = node.left;
         }
+        return min;
     }
+
 }
