@@ -91,10 +91,195 @@ public class RBT<T extends Comparable<? super T>> {
 	}
 
 	public void insert(T key) {
-		throw new UnsupportedOperationException("insert pendiente para el siguiente commit");
+		if (key == null) {
+			throw new IllegalArgumentException("No se puede insertar null");
+		}
+
+		RBTNode<T> newNode = new RBTNode<>(key, RED);
+
+		if (this.root == null) {
+			this.root = newNode;
+			this.root.color = BLACK;
+			this.size++;
+			return;
+		}
+
+		// Inserción tipo BST
+		RBTNode<T> current = this.root;
+		RBTNode<T> parent = null;
+
+		while (current != null) {
+			parent = current;
+			int compareResult = key.compareTo(current.key);
+
+			if (compareResult < 0) {
+				current = current.left;
+			} else if (compareResult > 0) {
+				current = current.right;
+			} else {
+				// Duplicado: no se inserta
+				return;
+			}
+		}
+
+		// Conectar el nuevo nodo
+		newNode.parent = parent;
+		int compareResult = key.compareTo(parent.key);
+
+		if (compareResult < 0) {
+			parent.left = newNode;
+		} else {
+			parent.right = newNode;
+		}
+
+		this.size++;
+
+		// Rebalanceo Red-Black
+		insertFixup(newNode);
+	}
+
+	private void insertFixup(RBTNode<T> node) {
+		while (node.parent != null && node.parent.color == RED) {
+			if (node.parent == node.parent.parent.left) {
+				// Caso A: padre es hijo izquierdo del abuelo
+				RBTNode<T> uncle = node.parent.parent.right;
+
+				if (colorOf(uncle) == RED) {
+					// Caso 1: Tío es rojo → recoloreamos
+					setColor(node.parent, BLACK);
+					setColor(uncle, BLACK);
+					setColor(node.parent.parent, RED);
+					node = node.parent.parent;
+				} else {
+					// Tío es negro
+					if (node == node.parent.right) {
+						// Caso 2: Triángulo → rotación izquierda
+						node = node.parent;
+						rotateLeft(node);
+					}
+					// Caso 3: Línea → rotación derecha + recolor
+					setColor(node.parent, BLACK);
+					setColor(node.parent.parent, RED);
+					rotateRight(node.parent.parent);
+				}
+			} else {
+				// Caso B: padre es hijo derecho del abuelo (simétrico)
+				RBTNode<T> uncle = node.parent.parent.left;
+
+				if (colorOf(uncle) == RED) {
+					// Caso 1: Tío es rojo → recoloreamos
+					setColor(node.parent, BLACK);
+					setColor(uncle, BLACK);
+					setColor(node.parent.parent, RED);
+					node = node.parent.parent;
+				} else {
+					// Tío es negro
+					if (node == node.parent.left) {
+						// Caso 2: Triángulo → rotación derecha
+						node = node.parent;
+						rotateRight(node);
+					}
+					// Caso 3: Línea → rotación izquierda + recolor
+					setColor(node.parent, BLACK);
+					setColor(node.parent.parent, RED);
+					rotateLeft(node.parent.parent);
+				}
+			}
+		}
+
+		// Garantizar que la raíz sea negra
+		this.root.color = BLACK;
+	}
+
+	// ============ Rotaciones ============
+
+	private void rotateLeft(RBTNode<T> node) {
+		RBTNode<T> rightChild = node.right;
+
+		if (rightChild == null) {
+			return;
+		}
+
+		// Rotación
+		node.right = rightChild.left;
+
+		if (rightChild.left != null) {
+			rightChild.left.parent = node;
+		}
+
+		rightChild.parent = node.parent;
+
+		if (node.parent == null) {
+			this.root = rightChild;
+		} else if (node == node.parent.left) {
+			node.parent.left = rightChild;
+		} else {
+			node.parent.right = rightChild;
+		}
+
+		rightChild.left = node;
+		node.parent = rightChild;
+	}
+
+	private void rotateRight(RBTNode<T> node) {
+		RBTNode<T> leftChild = node.left;
+
+		if (leftChild == null) {
+			return;
+		}
+
+		// Rotación
+		node.left = leftChild.right;
+
+		if (leftChild.right != null) {
+			leftChild.right.parent = node;
+		}
+
+		leftChild.parent = node.parent;
+
+		if (node.parent == null) {
+			this.root = leftChild;
+		} else if (node == node.parent.right) {
+			node.parent.right = leftChild;
+		} else {
+			node.parent.left = leftChild;
+		}
+
+		leftChild.right = node;
+		node.parent = leftChild;
+	}
+
+	// ============ Métodos auxiliares de color y estructura ============
+
+	private boolean colorOf(RBTNode<T> node) {
+		return node == null ? BLACK : node.color;
+	}
+
+	private void setColor(RBTNode<T> node, boolean color) {
+		if (node != null) {
+			node.color = color;
+		}
+	}
+
+	private RBTNode<T> parentOf(RBTNode<T> node) {
+		return node == null ? null : node.parent;
+	}
+
+	private RBTNode<T> grandparentOf(RBTNode<T> node) {
+		return parentOf(parentOf(node));
+	}
+
+	private RBTNode<T> uncleOf(RBTNode<T> node) {
+		RBTNode<T> grandparent = grandparentOf(node);
+
+		if (grandparent == null) {
+			return null;
+		}
+
+		return (parentOf(node) == grandparent.left) ? grandparent.right : grandparent.left;
 	}
 
 	public void delete(T key) {
-		throw new UnsupportedOperationException("delete pendiente para el siguiente commit");
+		throw new UnsupportedOperationException("delete no implementado: árbol Red-Black de solo lectura (insert/search)");
 	}
 }
