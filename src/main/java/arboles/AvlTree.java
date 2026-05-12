@@ -18,7 +18,7 @@ class AvlNode <T extends Comparable<? super T>>  {
     }
 }
 
-class AvlTree <T extends Comparable<? super T>> {
+public class AvlTree <T extends Comparable<? super T>> {
     private static final int ALLOWED_IMBALANCE = 1;
     private AvlNode<T> root;
 
@@ -202,5 +202,38 @@ class AvlTree <T extends Comparable<? super T>> {
             System.out.print(root.element+ " Right ");
             printTree(root.right);
         }
+    }
+
+    //Método que va a llamar la ventana main
+    public void recorrerYEjecutar(Dibujante callback) {
+        ayudanteRecursivo(root, callback,200,10,100);
+    }
+
+    public interface Dibujante<T> {
+        //Donde true es nodo y false es línea
+        void dibujar(T valor, double x, double y,boolean action,double gap);
+    }
+
+    private void ayudanteRecursivo(AvlNode<T> actual, Dibujante<Integer> callback,double x, double y, double gap) {
+        if (actual == null) return;
+
+        //Cálculo de distancias entre nodos
+        double proximoGap = gap / 2; 
+        double proximaY = y + 50;
+
+        //Recorre el nodo izquierdo.
+        if (actual.left != null) {
+            callback.dibujar((Integer) actual.element, x, y,false,gap);
+            ayudanteRecursivo(actual.left, callback, x - gap, proximaY, proximoGap);
+        }
+        
+        //Recorre el nodo derecho.
+        if (actual.right != null) {
+            callback.dibujar((Integer) actual.element, x, y,false,gap*-1);
+            ayudanteRecursivo(actual.right, callback, x + gap, proximaY, proximoGap);
+        }
+
+        //Dibujar el nodo actual.
+        callback.dibujar((Integer) actual.element, x, y,true,gap);
     }
 }
