@@ -1,6 +1,6 @@
 package estruc_datos;
 
-public class LinkedList <T extends Comparable<? super T>> {
+public class LinkedList <T extends Comparable<? super T>> implements int_estructura<T>{
     private Node<T> head;
     private Node<T> tail;
     private int size;
@@ -121,6 +121,19 @@ public class LinkedList <T extends Comparable<? super T>> {
         return this.size;
     }
 
+    @Override
+    public void insertar(T value) {
+        //Para poder crear una lista de objetos.
+        this.push(value);
+    }
+
+    @Override
+    public void obtenerDato() {
+        for(int i=0;i<this.getSize();i++){
+            System.out.println(this.getAt(i));
+        }
+    }
+
 }
 
 class Node <T extends Comparable<? super T>>{
@@ -143,5 +156,7 @@ class Node <T extends Comparable<? super T>>{
         public T getData(){
             return this.data;
         }
+
+        
 
 }

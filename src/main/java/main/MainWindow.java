@@ -15,7 +15,14 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import java.io.IOException;
+import java.util.Random;
 
+import arboles.AvlTree;
+import arboles.BST;
+import arboles.RBT;
+import estruc_datos.ArrayList;
+import estruc_datos.LinkedList;
+import estruc_datos.int_estructura;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -67,7 +74,74 @@ public class MainWindow {
         btn_play.setOnAction((EventHandler<ActionEvent>) new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
                 System.out.println("Button Play");
-                //Agregar aquí el comportamiento para iniciar la ejecusión.
+                //Capturar los árboles:
+                ArrayList<int_estructura<Integer>> estruc_list = new ArrayList<int_estructura<Integer>>();
+
+                //region Captura de las estructuras selecionadas
+                for (MenuItem item : cbo_estructuras.getItems()) {
+                    Node contenido = null;
+
+                    //Recorrido del MenuButton
+                    if (item instanceof CustomMenuItem) {
+                        contenido = ((CustomMenuItem) item).getContent();
+                    } else {
+                        contenido = item.getGraphic();
+                    }
+
+                    // Verificamos si lo que encontramos es un CheckBox
+                    if (contenido instanceof CheckBox) {
+                        CheckBox cb = (CheckBox) contenido;
+                        System.out.println("Seleccionado: " + cb.getText() + "  " + cb.isSelected());
+                        if(cb.isSelected()){
+                            switch (cb.getText()){
+                                case "ArrayList":
+                                    estruc_list.push(new ArrayList<Integer>());
+                                    break;
+                                case "LinkedList":
+                                    estruc_list.push(new LinkedList<Integer>());
+                                    break;
+                                case "Splay Tree":
+                                    break;
+                                case "Red-Black Tree":
+                                    //estruc_list.push(new RBT<Integer>());
+                                    break;
+                                case "AVL Tree":
+                                    //estruc_list.push(new AvlTree<Integer>());
+                                    break;
+                                case "BST Tree":
+                                    //estruc_list.push(new BST());
+                                    break;  
+                                default:
+                                    break;
+                            }
+                        }
+                    }    
+                }
+                //endregion
+
+                //Captura resto de componentes
+                int W = (int) spi_warmup.getValue();
+                int R = (int) spi_repetitions.getValue();
+                long seed = 10131L;
+                if (!txt_seed.getText().isEmpty()){
+                    seed = Integer.parseInt(txt_seed.getText());
+                }
+                int N = (int)  spi_nDatos.getValue();
+                
+                //Inserción de datos según semilla y cantidad.
+                Random generator = new Random();
+                generator.setSeed(seed);
+                
+                if(estruc_list.getSize() > 0){
+                    int_estructura<Integer> obj = (int_estructura<Integer>) estruc_list.getAt(0);
+                    for(int i=0;i<N;i++){
+                        //System.out.println(generator.nextInt(100));
+                        int digit = generator.nextInt(100);
+                        obj.insertar(digit);
+                    }
+                    //int_estructura<Integer> obj = (int_estructura<Integer>) estruc_list.getAt(0);
+                    obj.obtenerDato();
+                }
             }
         });
 

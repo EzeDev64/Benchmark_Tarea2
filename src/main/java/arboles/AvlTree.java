@@ -18,7 +18,7 @@ class AvlNode <T extends Comparable<? super T>>  {
     }
 }
 
-class AvlTree <T extends Comparable<? super T>> {
+public class AvlTree <T extends Comparable<? super T>> {
     private static final int ALLOWED_IMBALANCE = 1;
     private AvlNode<T> root;
 

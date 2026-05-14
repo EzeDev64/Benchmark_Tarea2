@@ -1,6 +1,6 @@
 package estruc_datos;
 
-public class ArrayList <T>{
+public class ArrayList <T> implements int_estructura<T>{
     private Object[] list;
     private int size;
 
@@ -96,6 +96,19 @@ public class ArrayList <T>{
 
     public int getSize(){
         return this.size;
+    }
+
+    //Para poder crear una lista de objetos.
+    @Override
+    public void insertar(T value) {
+        this.push(value);
+    }
+
+    @Override
+    public void obtenerDato() {
+        for(int i=0;i<this.getSize();i++){
+            System.out.println(this.getAt(i));
+        }
     }
 
 }
