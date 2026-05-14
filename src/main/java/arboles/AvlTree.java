@@ -18,9 +18,10 @@ class AvlNode <T extends Comparable<? super T>>  {
     }
 }
 
-class AvlTree <T extends Comparable<? super T>> {
+public class AvlTree <T extends Comparable<? super T>> {
     private static final int ALLOWED_IMBALANCE = 1;
     private AvlNode<T> root;
+    private double initPos;
 
     public AvlTree() {
         this.root = null;
@@ -202,5 +203,52 @@ class AvlTree <T extends Comparable<? super T>> {
             System.out.print(root.element+ " Right ");
             printTree(root.right);
         }
+    }
+
+    public void set_initPos(double val){
+        this.initPos = val;
+    }
+
+    //region Funciones implementadas para dibujar el nodo
+
+    //Método que va a llamar la ventana main
+    public void recorrerYEjecutar(Dibujante callback) {
+        //Ejecuta recurisivamente esta función la cuál recorra el arbol nodo por nodo
+        ayudanteRecursivo(root, callback,200,this.initPos,100);
+    }
+
+    public interface Dibujante<T> {
+        //Donde true es nodo y false es línea
+        //Al ser interfaz dentro de la aplicación cambia la función dibujar por draw_tree
+        void dibujar(T valor, double x, double y,boolean action,double gap);
+    }
+
+    private void ayudanteRecursivo(AvlNode<T> actual, Dibujante<Integer> callback,double x, double y, double gap) {
+        /*Recursivamente recorre nodo por nodo y hace lo siguiente
+        -Si es null (No hay nodo) termina
+        -Hace el cálculo de distancias
+        -Recorre el nodo izq y der, además de dibujar las líneas
+        -Dibuja el nodo
+        */
+        if (actual == null) return;
+
+        //Cálculo de distancias entre nodos
+        double proximoGap = gap / 2; 
+        double proximaY = y + 50;
+
+        //Recorre el nodo izquierdo.
+        if (actual.left != null) {
+            callback.dibujar((Integer) actual.element, x, y,false,gap);
+            ayudanteRecursivo(actual.left, callback, x - gap, proximaY, proximoGap);
+        }
+        
+        //Recorre el nodo derecho.
+        if (actual.right != null) {
+            callback.dibujar((Integer) actual.element, x, y,false,gap*-1);
+            ayudanteRecursivo(actual.right, callback, x + gap, proximaY, proximoGap);
+        }
+
+        //Dibujar el nodo actual.
+        callback.dibujar((Integer) actual.element, x, y,true,gap);
     }
 }
