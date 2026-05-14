@@ -21,6 +21,7 @@ class AvlNode <T extends Comparable<? super T>>  {
 public class AvlTree <T extends Comparable<? super T>> {
     private static final int ALLOWED_IMBALANCE = 1;
     private AvlNode<T> root;
+    private double initPos;
 
     public AvlTree() {
         this.root = null;
@@ -204,17 +205,31 @@ public class AvlTree <T extends Comparable<? super T>> {
         }
     }
 
+    public void set_initPos(double val){
+        this.initPos = val;
+    }
+
+    //region Funciones implementadas para dibujar el nodo
+
     //Método que va a llamar la ventana main
     public void recorrerYEjecutar(Dibujante callback) {
-        ayudanteRecursivo(root, callback,200,10,100);
+        //Ejecuta recurisivamente esta función la cuál recorra el arbol nodo por nodo
+        ayudanteRecursivo(root, callback,200,this.initPos,100);
     }
 
     public interface Dibujante<T> {
         //Donde true es nodo y false es línea
+        //Al ser interfaz dentro de la aplicación cambia la función dibujar por draw_tree
         void dibujar(T valor, double x, double y,boolean action,double gap);
     }
 
     private void ayudanteRecursivo(AvlNode<T> actual, Dibujante<Integer> callback,double x, double y, double gap) {
+        /*Recursivamente recorre nodo por nodo y hace lo siguiente
+        -Si es null (No hay nodo) termina
+        -Hace el cálculo de distancias
+        -Recorre el nodo izq y der, además de dibujar las líneas
+        -Dibuja el nodo
+        */
         if (actual == null) return;
 
         //Cálculo de distancias entre nodos
