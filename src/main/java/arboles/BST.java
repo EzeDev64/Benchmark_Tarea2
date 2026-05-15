@@ -1,5 +1,7 @@
 package arboles;
 
+import estruc_datos.int_estructura;
+
 // Clase que representa un nodo del BST
 class BSTNode 
 {
@@ -16,7 +18,7 @@ class BSTNode
 }
 
 // Clase principal del BST
-public class BST {
+public class BST<T> implements int_estructura<T>{
     private BSTNode root; // raíz del árbol
 
     // Constructor: inicializa el árbol vacío
@@ -82,7 +84,7 @@ public class BST {
          * Esto imprime las claves en orden ascendente.
          */
         public void inorder() {
-            inorderRec(root);
+            inorderRec(this.root);
         }
 
         private void inorderRec(BSTNode node) {
@@ -142,6 +144,16 @@ public class BST {
             node = node.left;
         }
         return min;
+    }
+
+    @Override
+    public void obtenerDato() {
+        inorder();
+    }
+
+    @Override
+    public void insertar(T value) {
+        this.insert((int) value);
     }
 
 }

@@ -103,13 +103,13 @@ public class MainWindow {
                                 case "Splay Tree":
                                     break;
                                 case "Red-Black Tree":
-                                    //estruc_list.push(new RBT<Integer>());
+                                    estruc_list.push(new RBT<Integer>());
                                     break;
                                 case "AVL Tree":
-                                    //estruc_list.push(new AvlTree<Integer>());
+                                    estruc_list.push(new AvlTree<Integer>());
                                     break;
                                 case "BST Tree":
-                                    //estruc_list.push(new BST());
+                                    estruc_list.push(new BST());
                                     break;  
                                 default:
                                     break;
@@ -133,14 +133,22 @@ public class MainWindow {
                 generator.setSeed(seed);
                 
                 if(estruc_list.getSize() > 0){
-                    int_estructura<Integer> obj = (int_estructura<Integer>) estruc_list.getAt(0);
-                    for(int i=0;i<N;i++){
-                        //System.out.println(generator.nextInt(100));
-                        int digit = generator.nextInt(100);
-                        obj.insertar(digit);
+                    int_estructura<Integer> obj;
+                    
+                    for(int i=0;i<estruc_list.getSize();i++){
+                        obj = (int_estructura<Integer>) estruc_list.getAt(i);
+                        generator.setSeed(seed);
+                        for(int p=0;p<N;p++){
+                            //System.out.println(generator.nextInt(100));
+                            Integer digit = generator.nextInt(100);
+                            obj.insertar(digit);
+                        }
                     }
-                    //int_estructura<Integer> obj = (int_estructura<Integer>) estruc_list.getAt(0);
-                    obj.obtenerDato();
+
+                    for(int i=0;i<estruc_list.getSize();i++){
+                        obj = (int_estructura<Integer>) estruc_list.getAt(i);
+                        obj.obtenerDato();
+                    }
                 }
             }
         });

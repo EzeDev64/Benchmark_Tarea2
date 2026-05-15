@@ -1,6 +1,8 @@
 package arboles;
 
-public class RBT<T extends Comparable<? super T>> {
+import estruc_datos.int_estructura;
+
+public class RBT<T extends Comparable<? super T>>  implements int_estructura<T> {
 
 	private static final boolean RED = true;
 	private static final boolean BLACK = false;
@@ -281,5 +283,32 @@ public class RBT<T extends Comparable<? super T>> {
 
 	public void delete(T key) {
 		throw new UnsupportedOperationException("delete no implementado: árbol Red-Black de solo lectura (insert/search)");
+	}
+
+	public void printTree(RBTNode<T> root){
+        if (root==null){
+            return;
+        }
+
+        System.out.println(root.key);
+        if(root.left != null){
+            System.out.print(root.key+ " Left "); 
+            printTree(root.left);
+        }
+
+        if(root.right != null){
+            System.out.print(root.key+ " Right ");
+            printTree(root.right);
+        }
+    }
+
+	@Override
+	public void insertar(T value) {
+		insert(value);
+	}
+
+	@Override
+	public void obtenerDato() {
+		printTree(root);
 	}
 }

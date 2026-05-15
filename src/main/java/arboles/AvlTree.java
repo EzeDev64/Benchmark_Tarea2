@@ -1,6 +1,8 @@
 package arboles;
 
-class AvlNode <T extends Comparable<? super T>>  {
+import estruc_datos.int_estructura;
+
+class AvlNode <T extends Comparable<? super T>>{
     T element;
     AvlNode<T> left;
     AvlNode<T> right;
@@ -18,7 +20,7 @@ class AvlNode <T extends Comparable<? super T>>  {
     }
 }
 
-public class AvlTree <T extends Comparable<? super T>> {
+public class AvlTree <T extends Comparable<? super T>> implements int_estructura<T>  {
     private static final int ALLOWED_IMBALANCE = 1;
     private AvlNode<T> root;
 
@@ -202,5 +204,15 @@ public class AvlTree <T extends Comparable<? super T>> {
             System.out.print(root.element+ " Right ");
             printTree(root.right);
         }
+    }
+
+    @Override
+    public void insertar(T value) {
+        insert(value);
+    }
+
+    @Override
+    public void obtenerDato() {
+        printTree(root);
     }
 }
