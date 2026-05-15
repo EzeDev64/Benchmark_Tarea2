@@ -28,6 +28,14 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 
 public class MainWindow {
+    // Valores predeterminados (presets) usados por el botón "Valores predeterminados"
+    // Definirlos como constantes facilita su uso y modificación.
+    private static final int DEFAULT_WARMUP = 0;
+    private static final int DEFAULT_REPETITIONS = 0;
+    private static final int DEFAULT_N_DATOS = 0;
+    private static final String DEFAULT_SEED = "10131";
+    private static final String DEFAULT_FIRST_TREE = "BTS Tree";
+    private static final String DEFAULT_SECOND_TREE = "AVL Tree";
     
     //Tab donde se encuenta la tabla para los datos
     @FXML private Tab tabTables;
@@ -54,6 +62,9 @@ public class MainWindow {
 
     @FXML
     public void initialize() {
+        // Inicialización del controlador JavaFX.
+        // Aquí se configura el rango de los spinners, se pueblan combobox
+        // y se aplica el preset por defecto al arrancar la vista.
         System.out.println("Iniciando");
         //region Definir el rango de los spinners.
         SpinnerValueFactory<Integer> valueFW = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 10, 0, 1);
@@ -67,9 +78,9 @@ public class MainWindow {
 
         //Definir los combobox con las estructuras de datos:
         cbo_firstData.getItems().addAll("BTS Tree", "AVL Tree", "Splay Tree","Red-Black Tree");
-        cbo_firstData.setValue("BTS Tree");
         cbo_secondData.getItems().addAll("BTS Tree", "AVL Tree", "Splay Tree","Red-Black Tree");
-        cbo_secondData.setValue("AVL Tree");
+
+        applyDefaultValues();
 
         btn_play.setOnAction((EventHandler<ActionEvent>) new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
@@ -147,8 +158,11 @@ public class MainWindow {
 
         btn_default.setOnAction((EventHandler<ActionEvent>) new EventHandler<ActionEvent>() {
             @Override public void handle(ActionEvent e) {
+                // Al presionar el botón de valores predeterminados
+                // reutilizamos el método `applyDefaultValues()` para
+                // rellenar todos los controles con los presets.
                 System.out.println("Button Valores predeterminados");
-                //Agregar aquí modificar los valores de de @settings_pane para establecer los predeterminados
+                applyDefaultValues();
             }
         });
 
@@ -184,5 +198,39 @@ public class MainWindow {
                     }
                 }
     */
+
+    // Método auxiliar que aplica los valores predeterminados a los controles
+    // - Setea los `Spinner` con sus valores por defecto
+    // - Escribe la semilla por defecto en `txt_seed`
+    // - Selecciona las opciones por defecto en los `ComboBox`
+    // - Marca/desmarca los `CheckBox` contenidos en `cbo_estructuras`
+    private void applyDefaultValues() {
+        // Spinners
+        spi_warmup.getValueFactory().setValue(DEFAULT_WARMUP);
+        spi_repetitions.getValueFactory().setValue(DEFAULT_REPETITIONS);
+        spi_nDatos.getValueFactory().setValue(DEFAULT_N_DATOS);
+
+        // Semilla y comboboxes
+        txt_seed.setText(DEFAULT_SEED);
+        cbo_firstData.setValue(DEFAULT_FIRST_TREE);
+        cbo_secondData.setValue(DEFAULT_SECOND_TREE);
+
+        // Itera los items del MenuButton para localizar CheckBox y marcarlos
+        for (MenuItem item : cbo_estructuras.getItems()) {
+            Node contenido = null;
+
+            if (item instanceof CustomMenuItem) {
+                contenido = ((CustomMenuItem) item).getContent();
+            } else {
+                contenido = item.getGraphic();
+            }
+
+            if (contenido instanceof CheckBox) {
+                CheckBox cb = (CheckBox) contenido;
+                // Marcamos ArrayList y LinkedList por defecto; ajusta según necesites
+                cb.setSelected("ArrayList".equals(cb.getText()) || "LinkedList".equals(cb.getText()));
+            }
+        }
+    }
 
 }
