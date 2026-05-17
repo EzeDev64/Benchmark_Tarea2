@@ -111,4 +111,23 @@ public class ArrayList <T> implements int_estructura<T>{
         }
     }
 
+    @Override
+    public Object buscar(T value) {
+        for(int i=0;i<this.size;i++){
+            if (value == this.list[i]){
+                return this.list[i];
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public void eliminar(T value) {
+        for(int i=0;i<this.size;i++){
+            if (value == this.list[i]){
+                this.delete(i);
+            }
+        }
+    }
+
 }

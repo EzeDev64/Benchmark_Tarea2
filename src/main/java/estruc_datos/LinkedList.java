@@ -111,6 +111,7 @@ public class LinkedList <T extends Comparable<? super T>> implements int_estruct
 
         return null;
     }
+
     public void HeadTail(){
         System.out.print(this.head.getData());
         System.out.print(" ");
@@ -129,8 +130,35 @@ public class LinkedList <T extends Comparable<? super T>> implements int_estruct
 
     @Override
     public void obtenerDato() {
+        System.out.println(this.head);
         for(int i=0;i<this.getSize();i++){
             System.out.println(this.getAt(i));
+        }
+    }
+
+    @Override
+    public Object buscar(T value) {
+        Node<T> object = this.head;
+        while (object != null){
+            if (object.getData()==value){
+                return object;
+            }else{
+                object = object.getnext();
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public void eliminar(T value) {
+        Node<T> object = this.head;
+
+        for(int i=0;i<this.getSize();i++){
+            if (object.getData()==value){
+                this.delete(i);
+            }else{
+                object = object.getnext();
+            }
         }
     }
 

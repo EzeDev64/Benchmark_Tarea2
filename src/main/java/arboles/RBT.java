@@ -311,4 +311,14 @@ public class RBT<T extends Comparable<? super T>>  implements int_estructura<T> 
 	public void obtenerDato() {
 		printTree(root);
 	}
+
+	@Override
+	public Object buscar(T value) {
+		return this.contains(value);
+	}
+
+	@Override
+	public void eliminar(T value) {
+		
+	}
 }

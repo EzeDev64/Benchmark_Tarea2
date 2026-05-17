@@ -77,10 +77,8 @@ public class AvlTree <T extends Comparable<? super T>> implements int_estructura
         }
         //Compruebo si el valor que pide es menor o mayor y me voy por los lados
         if(compareResult < 0){
-            System.out.println(root.element + " Me fui para la izquierda");
             return find(element,root.left);
         }else{
-            System.out.println(root.element + " Me fui para la derecha");
             return find(element,root.right);
         }
 
@@ -214,5 +212,15 @@ public class AvlTree <T extends Comparable<? super T>> implements int_estructura
     @Override
     public void obtenerDato() {
         printTree(root);
+    }
+
+    @Override
+    public Object buscar(T value) {
+        return this.find(value);
+    }
+
+    @Override
+    public void eliminar(T value) {
+        this.delete(value);
     }
 }

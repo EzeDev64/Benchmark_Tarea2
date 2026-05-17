@@ -27,12 +27,13 @@
                      <tabs>
                         <Tab fx:id="tabTables" text="Tables">
                            <content>
-                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="347.0" prefWidth="453.0">
+                              <AnchorPane fx:id="table_pane" minHeight="0.0" minWidth="0.0" prefHeight="347.0" prefWidth="453.0">
                                  <children>
                                     <TableView fx:id="table" layoutX="14.0" layoutY="12.0" prefHeight="323.0" prefWidth="393.0">
                                        <columns>
-                                          <TableColumn prefWidth="75.0" text="C1" />
-                                          <TableColumn prefWidth="75.0" text="C2" />
+                                          <TableColumn fx:id="tbCl_data1" prefWidth="75.0" text="Data1" />
+                                          <TableColumn fx:id="tbCl_data2" prefWidth="75.0" text="Data2" />
+                                          <TableColumn fx:id="tbCl_data3" prefWidth="75.0" text="Data3" />
                                        </columns>
                                     </TableView>
                                  </children>
@@ -104,8 +105,8 @@
       </SplitPane>
       <AnchorPane fx:id="buttons_pane" layoutX="2.0" layoutY="376.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="109.0" prefWidth="657.0">
          <children>
-            <Button fx:id="btn_default" layoutX="476.0" layoutY="42.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="158.0" text="Valores predeterminados" />
-            <Button fx:id="btn_play" layoutX="14.0" layoutY="42.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="131.0" text="Play" />
+            <Button fx:id="btn_default" layoutX="476.0" layoutY="42.0" mnemonicParsing="false" onAction="#applyDefaultValues" prefHeight="25.0" prefWidth="158.0" text="Valores predeterminados" />
+            <Button fx:id="btn_play" layoutX="14.0" layoutY="42.0" mnemonicParsing="false" onAction="#play" prefHeight="25.0" prefWidth="131.0" text="Play" />
             <Label layoutX="163.0" layoutY="46.0" text="Aquí poner talvez posible modo de manual/automático" />
          </children></AnchorPane>
    </children>

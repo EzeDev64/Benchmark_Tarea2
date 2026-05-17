@@ -156,4 +156,14 @@ public class BST<T> implements int_estructura<T>{
         this.insert((int) value);
     }
 
+    @Override
+    public Object buscar(T value) {
+        return this.search((int)value);
+    }
+
+    @Override
+    public void eliminar(T value) {
+        this.delete((int) value);
+    }
+
 }
