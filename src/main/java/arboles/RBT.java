@@ -321,4 +321,9 @@ public class RBT<T extends Comparable<? super T>>  implements int_estructura<T> 
 	public void eliminar(T value) {
 		
 	}
+
+	@Override
+	public String getName() {
+		return "RB Tree";
+	}
 }

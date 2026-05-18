@@ -15,7 +15,9 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("app_scene"), 640, 480);
+        stage.setTitle("Trabajo extraclase 2 Benchmark y visualización de estructuras de datos");
+        stage.setResizable(false);
+        scene = new Scene(loadFXML("app_scene"), 660, 480);
         stage.setScene(scene);
         stage.show();
     }

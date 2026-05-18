@@ -64,7 +64,7 @@
                   <Spinner fx:id="spi_repetitions" layoutX="83.0" layoutY="178.0" prefHeight="25.0" prefWidth="79.0" />
                   <Label layoutX="48.0" layoutY="231.0" text="Semilla:" />
                   <Label layoutX="127.0" layoutY="231.0" text="Cantidad de datos:" />
-                  <Spinner fx:id="spi_nDatos" layoutX="137.0" layoutY="257.0" prefHeight="25.0" prefWidth="79.0" />
+                  <Spinner fx:id="spi_nDatos" editable="true" layoutX="137.0" layoutY="257.0" prefHeight="25.0" prefWidth="79.0" />
                   <TextField fx:id="txt_seed" layoutX="19.0" layoutY="257.0" prefHeight="25.0" prefWidth="100.0" />
                   <MenuButton fx:id="cbo_estructuras" layoutX="19.0" layoutY="23.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="202.0" text="Estructuras a comparar">
                     <items>
@@ -107,7 +107,8 @@
          <children>
             <Button fx:id="btn_default" layoutX="476.0" layoutY="42.0" mnemonicParsing="false" onAction="#applyDefaultValues" prefHeight="25.0" prefWidth="158.0" text="Valores predeterminados" />
             <Button fx:id="btn_play" layoutX="14.0" layoutY="42.0" mnemonicParsing="false" onAction="#play" prefHeight="25.0" prefWidth="131.0" text="Play" />
-            <Label layoutX="163.0" layoutY="46.0" text="Aquí poner talvez posible modo de manual/automático" />
+            <Label layoutX="362.0" layoutY="46.0" prefHeight="17.0" prefWidth="94.0" text="Aquí poner talvez posible modo de manual/automático" />
+            <Button fx:id="btn_toCSV" layoutX="155.0" layoutY="42.0" mnemonicParsing="false" onAction="#exportToCSV" prefHeight="25.0" prefWidth="100.0" text="Exportar" />
          </children></AnchorPane>
    </children>
 </Pane>

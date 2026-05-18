@@ -3,11 +3,11 @@ package main;
 public class AnaEstruc {
     //Clase creada para guardar los datos de tiempo de Inserción, Búsqueda y eliminación de datos de las diferentes estructuras
     private String title;
-    private Float insertionTime;
-    private Float searchTime;
-    private Float deletionTime;
+    private String insertionTime;
+    private String searchTime;
+    private String deletionTime;
 
-    public AnaEstruc(String title, Float insertionTime, Float searchTime, Float deletionTime){
+    public AnaEstruc(String title, String insertionTime, String searchTime, String deletionTime){
         this.title = title;
         this.insertionTime = insertionTime;
         this.searchTime = searchTime;
@@ -18,15 +18,15 @@ public class AnaEstruc {
         return this.title;
     }
 
-    public Float getInsertionTime(){
+    public String getInsertionTime(){
         return this.insertionTime;
     }
 
-    public Float getSearchTime(){
+    public String getSearchTime(){
         return this.searchTime;
     }
 
-    public Float getDeletionTime(){
+    public String getDeletionTime(){
         return this.deletionTime;
     }
 }

@@ -5,5 +5,6 @@ public interface int_estructura<T> {
     void obtenerDato();
     Object buscar(T value);
     void eliminar(T value);
+    String getName();
 }
 

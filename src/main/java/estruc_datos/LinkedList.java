@@ -162,6 +162,11 @@ public class LinkedList <T extends Comparable<? super T>> implements int_estruct
         }
     }
 
+    @Override
+    public String getName() {
+        return "LinkedList";
+    }
+
 
 }
 

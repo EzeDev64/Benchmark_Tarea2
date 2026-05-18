@@ -223,4 +223,9 @@ public class AvlTree <T extends Comparable<? super T>> implements int_estructura
     public void eliminar(T value) {
         this.delete(value);
     }
+
+    @Override
+    public String getName() {
+        return "AvlTree";
+    }
 }

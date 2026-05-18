@@ -166,4 +166,9 @@ public class BST<T> implements int_estructura<T>{
         this.delete((int) value);
     }
 
+    @Override
+    public String getName() {
+        return "BS Tree";
+    }
+
 }

@@ -130,4 +130,9 @@ public class ArrayList <T> implements int_estructura<T>{
         }
     }
 
+    @Override
+    public String getName() {
+        return "ArrayList";
+    }
+
 }
