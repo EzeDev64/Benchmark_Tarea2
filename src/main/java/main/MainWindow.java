@@ -302,10 +302,11 @@ public class MainWindow{
     }
 
     public String[][] dataToArray(){
-        String[][]  filas = new String[listaDatos.size()][4];
+        String[][]  filas = new String[listaDatos.size()+1][4];
+        String[] title = {"Estructura","Inserción","Búsqueda","Eliminación"};
+        filas[0] = title;
 
-
-        for (int i=0;i<listaDatos.size();i++) {
+        for (int i=1;i<listaDatos.size();i++) {
             AnaEstruc data = listaDatos.get(i);
             // Extraemos los valores de cada objeto y los convertimos a String
             String col1 = String.valueOf(data.getTitle());
