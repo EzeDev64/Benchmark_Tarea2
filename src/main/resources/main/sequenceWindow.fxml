@@ -10,18 +10,18 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="758.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.SequenceWindow">
    <children>
-      <Button layoutX="565.0" layoutY="429.0" mnemonicParsing="false" text="Anterior">
+      <Button fx:id="btn_Anterior" layoutX="565.0" layoutY="429.0" mnemonicParsing="false" onAction="#goPrev" text="Anterior">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <Button layoutX="704.0" layoutY="429.0" mnemonicParsing="false" text="Siguinte">
+      <Button fx:id="btn_Siguiente" layoutX="704.0" layoutY="429.0" mnemonicParsing="false" onAction="#goNext" text="Siguinte">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
       <ChoiceBox fx:id="choiceBox_Estructure" layoutX="565.0" layoutY="210.0" prefHeight="25.0" prefWidth="208.0" />
-      <TextField layoutX="565.0" layoutY="354.0" prefHeight="25.0" prefWidth="208.0" text="7,2,8,4,1,3,5" />
+      <TextField fx:id="txtField_values" layoutX="565.0" layoutY="354.0" prefHeight="25.0" prefWidth="208.0" text="7,2,8,4,1,3,5" />
       <Label layoutX="565.0" layoutY="327.0" text="Valores a ingresar">
          <font>
             <Font size="13.0" />

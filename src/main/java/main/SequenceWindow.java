@@ -4,18 +4,21 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
+import sequenceStructures.Idrawable;
 import sequenceStructures.simpleAVL;
-
-import javafx.event.EventHandler;
+import sequenceStructures.simpleSplay;
+import sequenceStructures.sequenceLinkedList;
 
 public class SequenceWindow {
 
+    // FXML Section -----------------------------------------------------------------------------------------------------
     @FXML
     private ChoiceBox<String> choiceBox_Estructure;
     private String[] dataStructures = {"Array","Linked List","BST Tree","AVL Tree","Splay Tree","Red-Black Tree"};
@@ -26,36 +29,45 @@ public class SequenceWindow {
     @FXML
     private Button btn_play;
 
+    @FXML
+    private TextField txtField_values;
+
+    @FXML
+    private Button btn_Anterior;
+
+    @FXML
+    private Button btn_Siguiente;
+
+    // -------------------------------------------------------------------------------------------------------------------
+
+    // Class Attributes --------------------------------------------------------------------------------------------------
+    private int[] dataValues = null; 
+    private sequenceLinkedList sequencer = new sequenceLinkedList();
+    private sequenceLinkedList.SnapshotNode currentSnapshotNode;
+    // -------------------------------------------------------------------------------------------------------------------
+
+
+
+
 
     public void initialize(){
         choiceBox_Estructure.getItems().addAll(dataStructures);
+        //choiceBox_Estructure.setOnAction(this::structureRouter);
+        btn_play.setOnAction(this::play);
+        btn_Anterior.setOnAction(this::goPrev);
+        btn_Siguiente.setOnAction(this::goNext);
 
-        btn_play.setOnAction((EventHandler<ActionEvent>) new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
-                System.out.println("Button Play");
-                //region Temporalmente para probar el arbol 
-                //Agregar aquí el comportamiento para iniciar la ejecusión.
-                //Esto debería adaptarse a los datos que le pasen con la semilla y eso
-                simpleAVL<Integer> treeAVL = new simpleAVL<Integer>();
-                Integer[] data = {7,2,8,4,1,3,5};
-                for (Integer integer : data) {
-                    treeAVL.insert(integer);
-                }
-                //treeBST.delete(2);
-                //endregion
+    }
 
-                //Se llama la función luego de ejecutar toda la parte del benchmark
-                draw_tree(treeAVL);
-            }
-        });
-
+    private void clearCanvas(){
+        draw_pane.getChildren().clear();
     }
 
 
     //función principal para dibujar el arbol
-    public void draw_tree(simpleAVL<Integer> arbol1){
-        //Hay que implementar una manera eficiente para que reconozca los arboles pasados 
-        arbol1.recorrerYEjecutar((valor, x, y,action,gap) -> {
+    public void draw_tree(Idrawable arbol1){
+        this.clearCanvas();
+        arbol1.recorrerEjecutar((valor, x, y,action,gap) -> {
                 if (action){
                     drawNode(String.valueOf(valor), x, y);
                 }else{
@@ -102,8 +114,101 @@ public class SequenceWindow {
 
     @FXML
     void play(ActionEvent event) {
+        this.clearCanvas();
+        try {
+            String rawText = txtField_values.getText();
+            String[] stringValues = rawText.split(",");
+            int[] values = new int[stringValues.length];
+
+            for(int i = 0; i < stringValues.length; i++){
+                String currentString = stringValues[i];
+                currentString = currentString.trim();
+                int parsedNumber = Integer.parseInt(currentString);
+                values[i] = parsedNumber;
+            }
+            dataValues = values;
+            structureRouter();
+        } catch (Exception e) {
+            System.out.println("Data parsing error");
+        }
 
     }
+
+    @FXML
+    void goPrev(ActionEvent event) {
+        if (currentSnapshotNode != null && currentSnapshotNode.prev != null) {
+            currentSnapshotNode = currentSnapshotNode.prev;
+            draw_tree(currentSnapshotNode.treeSnapshot);
+        }
+
+    }
+
+    @FXML
+    void goNext(ActionEvent event) {
+        if (currentSnapshotNode != null && currentSnapshotNode.next != null) {
+            currentSnapshotNode = currentSnapshotNode.next;
+            draw_tree(currentSnapshotNode.treeSnapshot);
+        }
+
+    }
+
+
+    //"Array","Linked List","BST Tree","AVL Tree","Splay Tree","Red-Black Tree"
+    private void structureRouter(){
+
+        String structureType = choiceBox_Estructure.getValue();
+        switch(structureType) {
+            case "Array":
+                System.out.println("Chose Array");
+                break;
+
+            case "Linked List":
+                System.out.println("Chose Linked List");
+                break;
+
+            case "BST Tree":
+                System.out.println("Chose BST Tree");
+                break;
+
+            case "AVL Tree":
+                System.out.println("Chose AVL Tree");
+                sequencer.clear();
+                for (int i = 0; i < dataValues.length; i++) {
+                    simpleAVL snapshotTree = new simpleAVL();
+                    for (int j = 0; j <= i; j++) {
+                        snapshotTree.insert(dataValues[j]);
+                    }
+                    sequencer.insert(snapshotTree);
+                }
+                //draw_tree(treeAVL);
+                currentSnapshotNode = sequencer.getHead();
+                draw_tree(currentSnapshotNode.treeSnapshot);
+                break;
+
+            case "Splay Tree":
+                System.out.println("Chose Splay Tree");
+                sequencer.clear();
+                simpleSplay treeSplay = new simpleSplay();
+                for (int i = 0; i < dataValues.length; i++) {
+                    simpleSplay snapshotTree = new simpleSplay();
+                    for (int j = 0; j <= i; j++) {
+                        snapshotTree.insert(dataValues[j]);
+                    }
+                    sequencer.insert(snapshotTree);
+                }
+                //draw_tree(treeSplay);
+                currentSnapshotNode = sequencer.getHead();
+                draw_tree(currentSnapshotNode.treeSnapshot);
+                break;
+
+            case "Red-Black Tree":
+                System.out.println("Chose Red-Black Tree");
+                break;
+            }
+    }
+
+
+
 
     
     

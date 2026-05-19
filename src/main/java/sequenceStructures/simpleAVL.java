@@ -1,17 +1,17 @@
 package sequenceStructures;
 
 
-class AvlNode <T extends Comparable<? super T>>  {
-    T element;
-    AvlNode<T> left;
-    AvlNode<T> right;
+class AvlNode {
+    int element;
+    AvlNode left;
+    AvlNode right;
     int height;
 
-    public AvlNode(T element) {
+    public AvlNode(int element) {
         this(element, null, null);
     }
 
-    public AvlNode(T element, AvlNode<T> left, AvlNode<T> right) {
+    public AvlNode(int element, AvlNode left, AvlNode right) {
         this.element = element;
         this.left = left;
         this.right = right;
@@ -19,129 +19,45 @@ class AvlNode <T extends Comparable<? super T>>  {
     }
 }
 
-
-
-public class simpleAVL <T extends Comparable<? super T>> {
+public class simpleAVL implements Idrawable{
     private static final int ALLOWED_IMBALANCE = 1;
-    private AvlNode<T> root;
+    private AvlNode root;
     private double initPos;
 
     public simpleAVL() {
         this.root = null;
     }
 
-    public AvlNode<T> getRoot(){
+    public AvlNode getRoot(){
         return root;
     }
 
-    public void insert(T element) {
+    public void insert(int element) {
         this.root = this.insert(element, this.root);
     }
 
-    public void delete(T element){
-        delete(element, root);
-    }
-
-    public AvlNode<T> find(T element){
-        return find(element,this.root);
-    }
     
-    private int height(AvlNode<T> t) {
+    private int height(AvlNode t) {
         return t == null ? -1 : t.height;
     }
 
-    private AvlNode<T> insert(T x, AvlNode<T> t) {
+    private AvlNode insert(int x, AvlNode t) {
         if (t == null) {
-            return new AvlNode<T>(x);
+            return new AvlNode(x);
         }
 
-        // Usamos compareTo en lugar de < o >
-        int compareResult = x.compareTo(t.element);
-
-        if (compareResult < 0) {
+        if (x < t.element) {
             t.left = insert(x, t.left);
-        } else if (compareResult > 0) {
+        } else if (x > t.element) {
             t.right = insert(x, t.right);
         }
         
         return balance(t);
     }
 
-    private AvlNode<T> find(T element,AvlNode<T> root){
-        if(root == null){
-            return  null;
-        }
 
-        int compareResult = element.compareTo(root.element);
-
-        if (compareResult == 0){
-            return root;
-        }
-        //Compruebo si el valor que pide es menor o mayor y me voy por los lados
-        if(compareResult < 0){
-            System.out.println(root.element + " Me fui para la izquierda");
-            return find(element,root.left);
-        }else{
-            System.out.println(root.element + " Me fui para la derecha");
-            return find(element,root.right);
-        }
-
-    }
-    
-    public AvlNode<T> findMin() {
-        if (this.root == null) {
-            return null;
-        } else {
-            return this.findMin(this.root);
-        }
-    }
-
-    public AvlNode<T> findMax() {
-        if (this.root == null) {
-        return null;
-        } else {
-        return this.findMax(this.root);
-        }
-    }
-
-    private AvlNode<T> findMin(AvlNode<T> node) {
-        if (node == null)
-            return null;
-        else if (node.left == null)
-            return node;
-        else
-            return findMin(node.left);
-    }
-
-    private AvlNode<T> findMax(AvlNode<T> node) {
-        if (node!= null)
-            while (node.right != null) {
-                node = node.right;
-            }
-        return node;
-    }
-
-    private AvlNode<T> delete(T element, AvlNode<T> node){
-        if (node == null){
-            return node;
-        }
-
-        int compareResult = element.compareTo(node.element);
-        if (compareResult < 0){
-            node.left= delete(element, node.left);
-        }else if (compareResult > 0){
-            node.right = delete(element, node.right);
-        }else if (node.left != null && node.right != null){
-            node.element = findMin(node.right).element;
-            node.right = delete(node.element, node.right);
-        } else {
-            node = node.left != null ? node.left : node.right;
-        }
-
-        return balance(node);
-    }
     //Funciones para acomodar los nodos conforme se insertan
-    private AvlNode<T> balance(AvlNode<T> t) {
+    private AvlNode balance(AvlNode t) {
         if (t == null)
             return t;
 
@@ -163,8 +79,8 @@ public class simpleAVL <T extends Comparable<? super T>> {
         return t;
     }
 
-    private AvlNode<T> rotateWithLeftChild(AvlNode<T> k2) {
-        AvlNode<T> k1 = k2.left;
+    private AvlNode rotateWithLeftChild(AvlNode k2) {
+        AvlNode k1 = k2.left;
         k2.left = k1.right;
         k1.right = k2;
         k2.height = Math.max(height(k2.left), height(k2.right)) + 1;
@@ -172,8 +88,8 @@ public class simpleAVL <T extends Comparable<? super T>> {
         return k1;
     }
 
-    private AvlNode<T> rotateWithRightChild(AvlNode<T> k2) {
-        AvlNode<T> k1 = k2.right;
+    private AvlNode rotateWithRightChild(AvlNode k2) {
+        AvlNode k1 = k2.right;
         k2.right = k1.left;
         k1.left = k2;
         k2.height = Math.max(height(k2.left), height(k2.right)) + 1;
@@ -181,32 +97,16 @@ public class simpleAVL <T extends Comparable<? super T>> {
         return k1;
     }
 
-    private AvlNode<T> doubleWithLeftChild(AvlNode<T> k3) {
+    private AvlNode doubleWithLeftChild(AvlNode k3) {
         k3.left = rotateWithRightChild(k3.left);
         return rotateWithLeftChild(k3);
     }
 
-    private AvlNode<T> doubleWithRightChild(AvlNode<T> k3) {
+    private AvlNode doubleWithRightChild(AvlNode k3) {
         k3.right = rotateWithLeftChild(k3.right);
         return rotateWithRightChild(k3); // Corregido: antes llamaba a rotateWithLeftChild erróneamente
     }
 
-    public void printTree(AvlNode<T> root){
-        if (root==null){
-            return;
-        }
-
-        System.out.println(root.element);
-        if(root.left != null){
-            System.out.print(root.element+ " Left "); 
-            printTree(root.left);
-        }
-
-        if(root.right != null){
-            System.out.print(root.element+ " Right ");
-            printTree(root.right);
-        }
-    }
 
     public void set_initPos(double val){
         this.initPos = val;
@@ -215,7 +115,8 @@ public class simpleAVL <T extends Comparable<? super T>> {
     //region Funciones implementadas para dibujar el nodo
 
     //Método que va a llamar la ventana main
-    public void recorrerYEjecutar(Dibujante callback) {
+    @Override
+    public void recorrerEjecutar(Dibujante callback) {
         //Ejecuta recurisivamente esta función la cuál recorra el arbol nodo por nodo
         ayudanteRecursivo(root, callback,200,this.initPos,100);
     }
@@ -226,7 +127,7 @@ public class simpleAVL <T extends Comparable<? super T>> {
         void dibujar(T valor, double x, double y,boolean action,double gap);
     }
 
-    private void ayudanteRecursivo(AvlNode<T> actual, Dibujante<Integer> callback,double x, double y, double gap) {
+    private void ayudanteRecursivo(AvlNode actual, Dibujante<Integer> callback,double x, double y, double gap) {
         /*Recursivamente recorre nodo por nodo y hace lo siguiente
         -Si es null (No hay nodo) termina
         -Hace el cálculo de distancias
