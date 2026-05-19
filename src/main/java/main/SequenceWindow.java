@@ -14,6 +14,8 @@ import javafx.scene.text.Text;
 import sequenceStructures.Idrawable;
 import sequenceStructures.simpleAVL;
 import sequenceStructures.simpleSplay;
+import sequenceStructures.simpleBST;
+import sequenceStructures.simpleRBT;
 import sequenceStructures.sequenceLinkedList;
 
 public class SequenceWindow {
@@ -21,7 +23,7 @@ public class SequenceWindow {
     // FXML Section -----------------------------------------------------------------------------------------------------
     @FXML
     private ChoiceBox<String> choiceBox_Estructure;
-    private String[] dataStructures = {"Array","Linked List","BST Tree","AVL Tree","Splay Tree","Red-Black Tree"};
+    private String[] dataStructures = {"BST Tree","AVL Tree","Splay Tree","Red-Black Tree"};
 
     @FXML
     private AnchorPane draw_pane;
@@ -158,16 +160,19 @@ public class SequenceWindow {
 
         String structureType = choiceBox_Estructure.getValue();
         switch(structureType) {
-            case "Array":
-                System.out.println("Chose Array");
-                break;
-
-            case "Linked List":
-                System.out.println("Chose Linked List");
-                break;
 
             case "BST Tree":
                 System.out.println("Chose BST Tree");
+                sequencer.clear();
+                for (int i = 0; i < dataValues.length; i++) {
+                    simpleBST snapshotTree = new simpleBST();
+                    for (int j = 0; j <= i; j++) {
+                        snapshotTree.insert(dataValues[j]);
+                    }
+                    sequencer.insert(snapshotTree);
+                }
+                currentSnapshotNode = sequencer.getHead();
+                draw_tree(currentSnapshotNode.treeSnapshot);
                 break;
 
             case "AVL Tree":
@@ -180,7 +185,6 @@ public class SequenceWindow {
                     }
                     sequencer.insert(snapshotTree);
                 }
-                //draw_tree(treeAVL);
                 currentSnapshotNode = sequencer.getHead();
                 draw_tree(currentSnapshotNode.treeSnapshot);
                 break;
@@ -188,7 +192,6 @@ public class SequenceWindow {
             case "Splay Tree":
                 System.out.println("Chose Splay Tree");
                 sequencer.clear();
-                simpleSplay treeSplay = new simpleSplay();
                 for (int i = 0; i < dataValues.length; i++) {
                     simpleSplay snapshotTree = new simpleSplay();
                     for (int j = 0; j <= i; j++) {
@@ -196,13 +199,22 @@ public class SequenceWindow {
                     }
                     sequencer.insert(snapshotTree);
                 }
-                //draw_tree(treeSplay);
                 currentSnapshotNode = sequencer.getHead();
                 draw_tree(currentSnapshotNode.treeSnapshot);
                 break;
 
             case "Red-Black Tree":
                 System.out.println("Chose Red-Black Tree");
+                sequencer.clear();
+                for (int i = 0; i < dataValues.length; i++) {
+                    simpleRBT snapshotTree = new simpleRBT();
+                    for (int j = 0; j <= i; j++) {
+                        snapshotTree.insert(dataValues[j]);
+                    }
+                    sequencer.insert(snapshotTree);
+                }
+                currentSnapshotNode = sequencer.getHead();
+                draw_tree(currentSnapshotNode.treeSnapshot);;
                 break;
             }
     }

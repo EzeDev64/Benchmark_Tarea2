@@ -30,6 +30,7 @@ import java.time.Instant;
 import arboles.AvlTree;
 import arboles.BST;
 import arboles.RBT;
+import arboles.SplayT;
 import estruc_datos.ArrayList;
 import estruc_datos.LinkedList;
 import estruc_datos.int_estructura;
@@ -197,6 +198,7 @@ public class MainWindow{
                             estruc_list.push(new LinkedList<Integer>());
                             break;
                         case "Splay Tree":
+                            estruc_list.push(new SplayT<Integer>());
                             break;
                         case "Red-Black Tree":
                             estruc_list.push(new RBT<Integer>());
